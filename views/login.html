@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Competency Management System - Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="w-full max-w-md bg-white shadow-md rounded-xl p-6 sm:p-8">
+        <div class="flex flex-col items-center mb-6">
+            <div class="w-20 h-20 sm:w-24 sm:h-24 bg-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-3xl sm:text-4xl mb-4 shadow-lg">
+                CMS
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-2 text-center px-4">
+                Competency Management System
+            </h2>
+            <p class="text-sm sm:text-base text-gray-500 mb-6 text-center px-4">
+                Manage Your Professional Skills
+            </p>
+        </div>
+
+        <form id="loginForm" class="space-y-4">
+            <div>
+                <label for="username" class="block text-sm font-medium text-gray-700 mb-2">
+                    Username
+                </label>
+                <input 
+                    type="text" 
+                    id="username" 
+                    name="username" 
+                    required 
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Enter your username"
+                >
+            </div>
+
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
+                    Password
+                </label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    required 
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Enter your password"
+                >
+            </div>
+
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <input 
+                        id="remember-me" 
+                        name="remember-me" 
+                        type="checkbox" 
+                        class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                    >
+                    <label for="remember-me" class="ml-2 block text-sm text-gray-900">
+                        Remember me
+                    </label>
+                </div>
+
+                <div class="text-sm">
+                    <a href="#" class="font-medium text-blue-600 hover:text-blue-500">
+                        Forgot password?
+                    </a>
+                </div>
+            </div>
+
+            <div>
+                <button 
+                    type="submit" 
+                    class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                >
+                    Sign in
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simple dummy login validation
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Dummy credentials (in a real app, this would be server-side validation)
+            if (username === 'admin' && password === 'password') {
+                // Successful login - redirect to index
+                alert('Login Successful!');
+                window.location.href = '/dashboard';
+            } else {
+                // Failed login
+                alert('Invalid username or password');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+    <!-- Top Navbar -->
+    <nav class="fixed top-0 left-0 right-0 bg-white border-b h-16 flex items-center justify-between px-4 z-20">
+        <!-- Logo and System Name -->
+        <div class="flex items-center gap-3">
+            <!-- Mobile menu trigger -->
+            <button id="mobile-menu-trigger" class="lg:hidden p-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white font-bold">
+                    CMS
+                </div>
+                <span class="text-lg font-semibold hidden md:block">CompetencyMgmtSystem</span>
+            </div>
+        </div>
+
+        <!-- Search and Profile -->
+        <div class="flex items-center gap-4 ml-auto">
+            <!-- <div class="relative hidden md:block">
+                <input type="text" placeholder="Search" class="w-64 pl-10 pr-4 py-2 border rounded-lg">
+                <svg class="w-5 h-5 absolute left-3 top-2.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+            </div> -->
+            <button class="p-2">
+                <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                </svg>
+            </button>
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-gray-900 rounded-full flex items-center justify-center text-white text-sm">
+                    DU
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Side Navigation -->
+    <aside class="fixed left-0 top-16 bottom-0 w-64 bg-white border-r overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out z-10">
+        <nav class="p-4 space-y-6">
+            <div>
+                <a href="/dashboard" class="flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                    </svg>
+                    Dashboard
+                </a>
+            </div>
+
+            <div class="space-y-1">
+                <div class="px-4 py-2 text-sm font-medium text-gray-500">
+                    Functions
+                </div>
+                <a href="/individual" class="flex items-center gap-3 px-4 py-2 text-gray-700 bg-gray-100 rounded-lg">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                    </svg>
+                    Individuals
+                </a>
+                <a href="/company" class="flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                    </svg>
+                    Companies
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Mobile Overlay -->
+    <div id="mobile-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-0 hidden lg:hidden"></div>
+
+    <!-- Main Content -->
+    <main class="lg:ml-64 pt-16 min-h-screen">
+        <div class="p-4 md:p-6">
+            <!-- Content Header -->
+            <!-- <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+                <h1 class="text-2xl font-semibold">Individuals</h1>
+                <div class="flex flex-wrap gap-3">
+                    <button class="px-4 py-2 text-gray-700 border rounded-lg hover:bg-gray-50">
+                        Import Individuals
+                    </button>
+                    <button class="px-4 py-2 text-white bg-orange-500 rounded-lg hover:bg-orange-600">
+                        New Individual
+                    </button>
+                </div>
+            </div> -->
+
+            <!-- Statistics Cards -->
+
+            <div class="bg-white rounded-b-lg shadow-md p-6">
+    
+                <div class="flex flex-col md:flex-row gap-6">    
+                    <!-- Main Content -->
+                    <div class="flex-grow">
+                        <!-- Tab content for the first header -->
+                        <div id="tasks" class="tab-content overflow-x-auto">
+                            <div class="mb-4 flex flex-col gap-4 lg:flex-row lg:justify-between lg:items-center">
+                                <div id="employeeFilter" class="flex flex-col w-full lg:flex-row lg:w-auto gap-3">
+                                    <select class="border p-2 rounded w-full lg:w-40">
+                                        <option>Department: None</option>
+                                        <option>Drilling Operations</option>
+                                        <option>Petroleum Engineering</option>
+                                    </select>
+                                    <select class="border p-2 rounded w-full lg:w-40">
+                                        <option>Designation: None</option>
+                                        <option>Senior Drilling Engineer</option>
+                                        <option>Reservoir Engineer</option>
+                                    </select>
+                                    <select class="border p-2 rounded w-full lg:w-48">
+                                        <option>Experience (Years): None</option>
+                                        <option><5</option>
+                                        <option>>5</option>
+                                        <option>>10</option>
+                                    </select>
+                                </div>
+                                <div class="flex gap-2 w-full lg:w-auto">
+                                    <div class="flex items-center space-x-2">
+                                        <div class="flex gap-2 w-full lg:w-auto">
+                                            <button id="newEmployeeButton" class="flex items-center px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+                                                <div class="flex items-center justify-center w-6 h-6 bg-white-500 rounded-full shadow-md border border-white-500 mr-2">
+                                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                                                    </svg>
+                                                </div>
+                                                Add
+                                            </button>                                                                        
+                                            <input id="employeeSearch" type="text" placeholder="Search" class="border p-2 rounded flex-grow lg:flex-grow-0 lg:w-48">
+                                        </div>
+                                    </div>
+                                    <!-- <button class="p-2 bg-gray-100 rounded">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                                            <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        </svg>
+                                    </button> -->
+                                </div>
+                            </div>
+                            <table class="w-full">
+                                <thead class="bg-gray-100">
+                                    <tr>
+                                        <th class="text-left p-3">Name</th>
+                                        <th class="text-left p-3">Department</th>
+                                        <th class="text-left p-3">Designation</th>
+                                        <th class="text-left p-3">Experience (Years)</th>
+                                        <th class="text-left p-3">Competency Progress</th>
+                                        <th class="text-left p-3">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="employeeList" class="divide-y">
+                                    <tr>
+                                        <td class="p-3">Michael Rodriguez</td>
+                                        <td class="p-3">Drilling Operations</td>
+                                        <td class="p-3">Senior Drilling Engineer</td>
+                                        <td class="p-3">12</td>
+                                        <td class="p-3">
+                                            <div class="bg-gray-200 h-2 rounded">
+                                                <div class="bg-blue-500 h-2 rounded" style="width: 85%"></div>
+                                            </div>
+                                        </td>
+                                        <td class="p-3">
+                                            <button onclick="handleViewClick()" class="p-1 hover:bg-gray-100 rounded-md" data-task-name="ABC Company Business Systems" data-requirements="1" data-status="active">
+                                                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5C7.305 4.5 3.135 7.305 1.5 12c1.635 4.695 5.805 7.5 10.5 7.5s8.865-2.805 10.5-7.5C20.865 7.305 16.695 4.5 12 4.5zm0 12c-2.485 0-4.5-2.015-4.5-4.5s2.015-4.5 4.5-4.5 4.5 2.015 4.5 4.5-2.015 4.5-4.5 4.5zm0-7.5c-1.655 0-3 1.345-3 3s1.345 3 3 3 3-1.345 3-3-1.345-3-3-3z"/>
+                                                </svg>                                                
+                                            </button>
+                                            <button onclick="openEmployeeEditModal(this)" class="p-1 hover:bg-gray-100 rounded-md">
+                                                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                                                </svg>
+                                            </button>
+                                            <button onclick="openDeleteModal(this)" class="p-1 hover:bg-gray-100 rounded-md">
+                                                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M9 6v12m6-12v12M4 6l1-1h14l1 1M5 6v12a2 2 0 002 2h10a2 2 0 002-2V6"/>
+                                                </svg>                                                
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-3">Sarah Thompson</td>
+                                        <td class="p-3">Petroleum Engineering</td>
+                                        <td class="p-3">Reservoir Engineer</td>
+                                        <td class="p-3">8</td>
+                                        <td class="p-3">
+                                            <div class="bg-gray-200 h-2 rounded">
+                                                <div class="bg-blue-500 h-2 rounded" style="width: 65%"></div>
+                                            </div>
+                                        </td>
+                                        <td class="p-3">
+                                            <button onclick="handleViewClick()" class="p-1 hover:bg-gray-100 rounded-md" data-task-name="ABC Company Business Systems" data-requirements="1" data-status="active">
+                                                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5C7.305 4.5 3.135 7.305 1.5 12c1.635 4.695 5.805 7.5 10.5 7.5s8.865-2.805 10.5-7.5C20.865 7.305 16.695 4.5 12 4.5zm0 12c-2.485 0-4.5-2.015-4.5-4.5s2.015-4.5 4.5-4.5 4.5 2.015 4.5 4.5-2.015 4.5-4.5 4.5zm0-7.5c-1.655 0-3 1.345-3 3s1.345 3 3 3 3-1.345 3-3-1.345-3-3-3z"/>
+                                                </svg>                                                
+                                            </button>
+                                            <button onclick="openEmployeeEditModal(this)" class="p-1 hover:bg-gray-100 rounded-md">
+                                                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                                                </svg>
+                                            </button>
+                                            <button onclick="openDeleteModal(this)" class="p-1 hover:bg-gray-100 rounded-md">
+                                                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M9 6v12m6-12v12M4 6l1-1h14l1 1M5 6v12a2 2 0 002 2h10a2 2 0 002-2V6"/>
+                                                </svg>                                                
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-3">Alex Kim</td>
+                                        <td class="p-3">Health, Safety & Environment</td>
+                                        <td class="p-3">HSE Manager</td>
+                                        <td class="p-3">15</td>
+                                        <td class="p-3">
+                                            <div class="bg-gray-200 h-2 rounded">
+                                                <div class="bg-blue-500 h-2 rounded" style="width: 95%"></div>
+                                            </div>
+                                        </td>
+                                        <td class="p-3">
+                                            <button onclick="handleViewClick()" class="p-1 hover:bg-gray-100 rounded-md" data-task-name="ABC Company Business Systems" data-requirements="1" data-status="active">
+                                                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5C7.305 4.5 3.135 7.305 1.5 12c1.635 4.695 5.805 7.5 10.5 7.5s8.865-2.805 10.5-7.5C20.865 7.305 16.695 4.5 12 4.5zm0 12c-2.485 0-4.5-2.015-4.5-4.5s2.015-4.5 4.5-4.5 4.5 2.015 4.5 4.5-2.015 4.5-4.5 4.5zm0-7.5c-1.655 0-3 1.345-3 3s1.345 3 3 3 3-1.345 3-3-1.345-3-3-3z"/>
+                                                </svg>                                                
+                                            </button>
+                                            <button onclick="openEmployeeEditModal(this)" class="p-1 hover:bg-gray-100 rounded-md">
+                                                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                                                </svg>
+                                            </button>
+                                            <button onclick="openDeleteModal(this)" class="p-1 hover:bg-gray-100 rounded-md">
+                                                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M9 6v12m6-12v12M4 6l1-1h14l1 1M5 6v12a2 2 0 002 2h10a2 2 0 002-2V6"/>
+                                                </svg>                                                
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-3">Elena Petrova</td>
+                                        <td class="p-3">Exploration & Production</td>
+                                        <td class="p-3">Geologist</td>
+                                        <td class="p-3">10</td>
+                                        <td class="p-3">
+                                            <div class="bg-gray-200 h-2 rounded">
+                                                <div class="bg-blue-500 h-2 rounded" style="width: 75%"></div>
+                                            </div>
+                                        </td>
+                                        <td class="p-3">
+                                            <button onclick="handleViewClick()" class="p-1 hover:bg-gray-100 rounded-md" data-task-name="ABC Company Business Systems" data-requirements="1" data-status="active">
+                                                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5C7.305 4.5 3.135 7.305 1.5 12c1.635 4.695 5.805 7.5 10.5 7.5s8.865-2.805 10.5-7.5C20.865 7.305 16.695 4.5 12 4.5zm0 12c-2.485 0-4.5-2.015-4.5-4.5s2.015-4.5 4.5-4.5 4.5 2.015 4.5 4.5-2.015 4.5-4.5 4.5zm0-7.5c-1.655 0-3 1.345-3 3s1.345 3 3 3 3-1.345 3-3-1.345-3-3-3z"/>
+                                                </svg>                                                
+                                            </button>
+                                            <button onclick="openEmployeeEditModal(this)" class="p-1 hover:bg-gray-100 rounded-md">
+                                                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                                                </svg>
+                                            </button>
+                                            <button onclick="openDeleteModal(this)" class="p-1 hover:bg-gray-100 rounded-md">
+                                                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M9 6v12m6-12v12M4 6l1-1h14l1 1M5 6v12a2 2 0 002 2h10a2 2 0 002-2V6"/>
+                                                </svg>                                                
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-3">David Nwosu</td>
+                                        <td class="p-3">Offshore Operations</td>
+                                        <td class="p-3">Offshore Installation Manager</td>
+                                        <td class="p-3">20</td>
+                                        <td class="p-3">
+                                            <div class="bg-gray-200 h-2 rounded">
+                                                <div class="bg-blue-500 h-2 rounded" style="width: 100%"></div>
+                                            </div>
+                                        </td>
+                                        <td class="p-3">
+                                            <button onclick="handleViewClick()" class="p-1 hover:bg-gray-100 rounded-md" data-task-name="ABC Company Business Systems" data-requirements="1" data-status="active">
+                                                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5C7.305 4.5 3.135 7.305 1.5 12c1.635 4.695 5.805 7.5 10.5 7.5s8.865-2.805 10.5-7.5C20.865 7.305 16.695 4.5 12 4.5zm0 12c-2.485 0-4.5-2.015-4.5-4.5s2.015-4.5 4.5-4.5 4.5 2.015 4.5 4.5-2.015 4.5-4.5 4.5zm0-7.5c-1.655 0-3 1.345-3 3s1.345 3 3 3 3-1.345 3-3-1.345-3-3-3z"/>
+                                                </svg>                                                
+                                            </button>
+                                            <button onclick="openEmployeeEditModal(this)" class="p-1 hover:bg-gray-100 rounded-md">
+                                                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                                                </svg>
+                                            </button>
+                                            <button onclick="openDeleteModal(this)" class="p-1 hover:bg-gray-100 rounded-md">
+                                                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M9 6v12m6-12v12M4 6l1-1h14l1 1M5 6v12a2 2 0 002 2h10a2 2 0 002-2V6"/>
+                                                </svg>                                                
+                                            </button>
+                                        </td>
+                                    </tr>
+                            </table>
+                            <div id="newEmployeeModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
+                                <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+                                    <div class="mt-3">
+                                        <h3 class="text-lg font-medium leading-6 text-gray-900 mb-4">Add New Employee</h3>
+                                        <form id="newEmployeeForm">
+                                            <div class="mb-4">
+                                                <label class="block text-sm font-medium text-gray-700">Name</label>
+                                                <input id="name" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" required>
+                                            </div>
+                                            <div class="mb-4">
+                                                <label class="block text-sm font-medium text-gray-700">Department</label>
+                                                <input id="department" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
+                                            </div>
+                                            <div class="mb-4">
+                                                <label class="block text-sm font-medium text-gray-700">Designation</label>
+                                                <input id="designation" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
+                                            </div>
+                                            <div class="mb-4">
+                                                <label class="block text-sm font-medium text-gray-700">Experience (Years)</label>
+                                                <input id="experience" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" required>
+                                            </div>
+                                            <div class="mb-4">
+                                                <label class="block text-sm font-medium text-gray-700">Progress</label>
+                                                <input id="progress" type="number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" required>
+                                            </div>
+                                            <div class="flex justify-end gap-2">
+                                                <button type="button" onclick="closeModal('newEmployeeModal')" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300">Cancel</button>
+                                                <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">Save</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Mobile menu functionality
+        const mobileTrigger = document.getElementById('mobile-menu-trigger');
+        const sideNav = document.querySelector('aside');
+        const mobileOverlay = document.getElementById('mobile-overlay');
+
+        const departmentFilter = document.querySelector('#employeeFilter select:nth-child(1)');
+        const designationFilter = document.querySelector('#employeeFilter select:nth-child(2)');
+        const experienceFilter = document.querySelector('#employeeFilter select:nth-child(3)');
+        
+
+        const employees = [
+            {
+                name: "Michael Rodriguez",
+                department: "Drilling Operations",
+                designation: "Senior Drilling Engineer",
+                experience: 12,
+                competencyProgress: "85%"
+            },
+            {
+                name: "Sarah Thompson",
+                department: "Petroleum Engineering",
+                designation: "Reservoir Engineer",
+                experience: 8,
+                competencyProgress: "65%"
+            },
+            {
+                name: "Alex Kim",
+                department: "Health, Safety & Environment",
+                designation: "HSE Manager",
+                experience: 15,
+                competencyProgress: "95%"
+            },
+            {
+                name: "Elena Petrova",
+                department: "Exploration & Production",
+                designation: "Geologist",
+                experience: 10,
+                competencyProgress: "75%"
+            },
+            {
+                name: "David Nwosu",
+                department: "Offshore Operations",
+                designation: "Offshore Installation Manager",
+                experience: 20,
+                competencyProgress: "100%"
+            }
+        ];
+
+        function toggleMobileMenu() {
+            sideNav.classList.toggle('-translate-x-full');
+            mobileOverlay.classList.toggle('hidden');
+            document.body.classList.toggle('overflow-hidden');
+        }
+
+        mobileTrigger.addEventListener('click', toggleMobileMenu);
+        mobileOverlay.addEventListener('click', toggleMobileMenu);
+
+        const searchInput = document.getElementById('employeeSearch');
+
+        document.querySelectorAll('nav button').forEach(button => {
+            button.addEventListener('click', () => {
+                const nav = button.closest('nav');
+                nav.querySelectorAll('button').forEach(btn => {
+                    btn.classList.remove('border-gray-700', 'text-gray-700');
+                    btn.classList.add('text-gray-500');
+                });
+                button.classList.remove('text-gray-500');
+                button.classList.add('border-gray-700', 'text-gray-700');
+            });
+        });
+
+        departmentFilter.addEventListener('change', filterEmployees);
+        designationFilter.addEventListener('change', filterEmployees);
+        experienceFilter.addEventListener('change', filterEmployees);
+        searchInput.addEventListener('input', filterEmployees);
+
+        filterEmployees();
+
+        function displayFilteredEmployees(filteredEmployees) {
+            const employeeList = document.getElementById('employeeList');
+            employeeList.innerHTML = '';
+            filteredEmployees.forEach(employee => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="p-3">${employee.name}</td>
+                    <td class="p-3">${employee.department}</td>
+                    <td class="p-3">${employee.designation}</td>
+                    <td class="p-3">${employee.experience}</td>
+                    <td class="p-3">
+                        <div class="bg-gray-200 h-2 rounded">
+                            <div class="bg-blue-500 h-2 rounded" style="width: ${employee.competencyProgress}%"></div>
+                        </div>
+                    </td>
+                    <td class="p-3">
+                        <button onclick="handleViewClick()" class="p-1 hover:bg-gray-100 rounded-md" data-task-name="ABC Company Business Systems" data-requirements="1" data-status="active">
+                            <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5C7.305 4.5 3.135 7.305 1.5 12c1.635 4.695 5.805 7.5 10.5 7.5s8.865-2.805 10.5-7.5C20.865 7.305 16.695 4.5 12 4.5zm0 12c-2.485 0-4.5-2.015-4.5-4.5s2.015-4.5 4.5-4.5 4.5 2.015 4.5 4.5-2.015 4.5-4.5 4.5zm0-7.5c-1.655 0-3 1.345-3 3s1.345 3 3 3 3-1.345 3-3-1.345-3-3-3z"/>
+                            </svg>                                                
+                        </button>
+                        <button onclick="openEmployeeEditModal(this)" class="p-1 hover:bg-gray-100 rounded-md">
+                            <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                            </svg>
+                        </button>
+                        <button onclick="openDeleteModal(this)" class="p-1 hover:bg-gray-100 rounded-md">
+                            <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M9 6v12m6-12v12M4 6l1-1h14l1 1M5 6v12a2 2 0 002 2h10a2 2 0 002-2V6"/>
+                            </svg>                                                
+                        </button>
+                    </td>
+                `;
+                employeeList.appendChild(row);
+            });
+        }
+
+        function filterEmployees() {
+            const selectedDepartment = departmentFilter.value;
+            const selectedDesignation = designationFilter.value;
+            const selectedExperience = experienceFilter.value;
+            const searchTerm = searchInput.value.toLowerCase().trim();
+
+            const filteredEmployees = employees.filter(employee => {
+                const departmentMatch = selectedDepartment === "Department: None" || 
+                                        employee.department === selectedDepartment;
+                const designationMatch = selectedDesignation === "Designation: None" || 
+                                        employee.designation === selectedDesignation;
+
+                const experienceMatch = selectedExperience === "Experience (Years): None" || 
+                    (selectedExperience === "<5" && employee.experience < 5) ||
+                    (selectedExperience === ">5" && employee.experience > 5) ||
+                    (selectedExperience === ">10" && employee.experience > 10);
+
+                const searchMatch = searchTerm === "" || 
+                    Object.values(employee).some(value => 
+                        String(value).toLowerCase().includes(searchTerm)
+                );
+
+
+                return departmentMatch && designationMatch && experienceMatch && searchMatch;
+            });
+            displayFilteredEmployees(filteredEmployees);
+        }
+
+
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.remove('hidden');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+        }
+
+
+        function confirmDelete(name) {
+            if (window.taskToDelete) {
+                window.taskToDelete.remove();
+            }
+            closeModal(name);
+        }
+
+        
+        const newEmployeeButton = document.getElementById('newEmployeeButton');
+        if(newEmployeeButton) {
+            newEmployeeButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                openModal('newEmployeeModal');
+            });
+        }
+        const newEmployeeForm = document.getElementById('newEmployeeForm');
+        if (newEmployeeForm) {
+            newEmployeeForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const form = document.getElementById('newEmployeeForm');
+                const nameInput = form.querySelector('input[id="name"]');
+                const departmentInput = form.querySelector('input[id="department"]');
+                const designationInput = form.querySelector('input[id="designation"]');
+                const experienceInput = form.querySelector('input[id="experience"]');
+                const progressInput = form.querySelector('input[id="progress"]');
+                const name = nameInput.value.trim();
+                const department = departmentInput.value.trim();
+                const designation = designationInput.value.trim();
+                const experience = experienceInput.value.trim();
+                const progress = progressInput.value.trim();
+                
+                if (!nameInput) {
+                    alert('Please enter an employee name');
+                    return;
+                }
+                addNewEmployeeRow(name, department, designation, experience, progress);
+                closeModal('newEmployeeModal');
+            });
+        }
+
+        function addNewEmployeeRow(name, department, designation, experience, progress) {
+            const employeeList = document.getElementById('employeeList');
+            const newRow = document.createElement('tr');
+
+            newRow.innerHTML = `
+                <td class="p-3">${name}</td>
+                <td class="p-3">${department}</td>
+                <td class="p-3">${designation}</td>
+                <td class="p-3">${experience}</td>
+                <td class="p-3">
+                    <div class="bg-gray-200 h-2 rounded">
+                        <div class="bg-blue-500 h-2 rounded" style="width: ${progress}%"></div>
+                    </div>
+                </td>
+                <td class="p-3">
+                    <button onclick="handleViewClick()" class="p-1 hover:bg-gray-100 rounded-md" data-task-name="ABC Company Business Systems" data-requirements="1" data-status="active">
+                        <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5C7.305 4.5 3.135 7.305 1.5 12c1.635 4.695 5.805 7.5 10.5 7.5s8.865-2.805 10.5-7.5C20.865 7.305 16.695 4.5 12 4.5zm0 12c-2.485 0-4.5-2.015-4.5-4.5s2.015-4.5 4.5-4.5 4.5 2.015 4.5 4.5-2.015 4.5-4.5 4.5zm0-7.5c-1.655 0-3 1.345-3 3s1.345 3 3 3 3-1.345 3-3-1.345-3-3-3z"/>
+                        </svg>                                                
+                    </button>
+                    <button onclick="openEmployeeEditModal(this)" class="p-1 hover:bg-gray-100 rounded-md">
+                        <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                        </svg>
+                    </button>
+                    <button onclick="openDeleteModal(this)" class="p-1 hover:bg-gray-100 rounded-md">
+                        <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M9 6v12m6-12v12M4 6l1-1h14l1 1M5 6v12a2 2 0 002 2h10a2 2 0 002-2V6"/>
+                        </svg>                                                
+                    </button>
+                </td>
+            `;
+            employeeList.appendChild(newRow);
+        }
+
+        function handleViewClick() {
+            window.location.href = '/competency';
+        }
+
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            const modals = ['newTaskModal', 'newSubTaskModal', 'editTaskModal', 'editSubTaskModal', 'deleteConfirmModal'];
+            modals.forEach(modalId => {
+                const modal = document.getElementById(modalId);
+                if (event.target === modal) {
+                    closeModal(modalId);
+                }
+            });
+        }
+
+
+    </script>
