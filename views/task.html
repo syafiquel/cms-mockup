@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employer Dashboard</title>
+    <title>Task</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50">
@@ -113,22 +113,24 @@
                         <!-- Tab content for the first header -->
                         <div id="tasks" class="tab-content overflow-x-auto">
                             <div class="mb-4 flex flex-col gap-4 lg:flex-row lg:justify-between lg:items-center">
-                                <div id="employerFilter" class="flex flex-col w-full lg:flex-row lg:w-auto gap-3">
+                                <div class="flex flex-col w-full lg:flex-row lg:w-auto gap-3">
                                     <select class="border p-2 rounded w-full lg:w-40">
-                                        <option>SubIndustry: None</option>
-                                        <option>Upstream Exploration</option>
-                                        <option>Renewable Energy Transition</option>
-                                        <option>Integrated Oil & Gas</option>
-                                        <option>Frontier Exploration</option>
-                                        <option>Midstream Infrastructure</option>
+                                        <option>Task Name: None</option>
+                                        <option>Aerial & Scissor Lift Certification</option>
+                                        <option>Pipeline Integrity Inspection</option>
+                                        <option>Offshore Safety Drill</option>
                                     </select>
                                     <select class="border p-2 rounded w-full lg:w-40">
-                                        <option>Headquarters: None</option>
-                                        <option>Houston, Texas</option>
-                                        <option>Amsterdam, Netherlands</option>
-                                        <option>Abu Dhabi, UAE</option>
-                                        <option>Oslo, Norway</option>
-                                        <option>Calgary, Canada</option>
+                                        <option>Category: None</option>
+                                        <option>Training</option>
+                                        <option>Maintenance</option>
+                                        <option>Safety</option>
+                                    </select>
+                                    <select class="border p-2 rounded w-full lg:w-48">
+                                        <option>Status: None</option>
+                                        <option>In Progress</option>
+                                        <option>Completed</option>
+                                        <option>Pending</option>
                                     </select>
                                 </div>
                                 <div class="flex gap-2 w-full lg:w-auto">
@@ -156,28 +158,37 @@
                             <table class="w-full">
                                 <thead class="bg-gray-100">
                                     <tr>
-                                        <th class="text-left p-3">Name</th>
-                                        <th class="text-left p-3">Sub-Industry</th>
-                                        <th class="text-left p-3">Heaquarters</th>
-                                        <th class="text-left p-3">Founded Year</th>
-                                        <th class="text-left p-3">employer Count</th>
+                                        <th class="text-left p-3">Task Name</th>
+                                        <th class="text-left p-3">Category</th>
+                                        <th class="text-left p-3">Status</th>
+                                        <th class="text-left p-3">Due Date</th>
+                                        <th class="text-left p-3">Progress</th>
                                         <th class="text-left p-3">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody id="employerList" class="divide-y">
                                     <tr>
-                                        <td class="p-3">PetroTech Global</td>
-                                        <td class="p-3">Upstream Exploration</td>
-                                        <td class="p-3">Houston, Texas</td>
-                                        <td class="p-3">1985</td>
-                                        <td class="p-3">5200</td>
+                                        <td class="p-3">Aerial & Scissor Lift Certification</td>
+                                        <td class="p-3">Training</td>
+                                        <td class="p-3">In Progress</td>
+                                        <td class="p-3">02/20/2022</td>
                                         <td class="p-3">
-                                            <button onclick="openEmployerEditModal(this)" class="p-1 hover:bg-gray-100 rounded-md">
+                                            <div class="bg-gray-200 h-2 rounded">
+                                                <div class="bg-blue-500 h-2 rounded" style="width: 20%"></div>
+                                            </div>
+                                        </td>
+                                        <td class="p-3">
+                                            <button onclick="handleViewClick('tasks', 'task-list-template')" class="p-1 hover:bg-gray-100 rounded-md" data-task-name="ABC Company Business Systems" data-requirements="1" data-status="active">
+                                                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5C7.305 4.5 3.135 7.305 1.5 12c1.635 4.695 5.805 7.5 10.5 7.5s8.865-2.805 10.5-7.5C20.865 7.305 16.695 4.5 12 4.5zm0 12c-2.485 0-4.5-2.015-4.5-4.5s2.015-4.5 4.5-4.5 4.5 2.015 4.5 4.5-2.015 4.5-4.5 4.5zm0-7.5c-1.655 0-3 1.345-3 3s1.345 3 3 3 3-1.345 3-3-1.345-3-3-3z"/>
+                                                </svg>                                                
+                                            </button>
+                                            <button onclick="openTaskEditModal(this)" class="p-1 hover:bg-gray-100 rounded-md" data-task="Aerial & Scissor Lift Certification" data-category="Training" data-status="In Progress" data-due="02/20/2022" data-progress="20">
                                                 <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
                                                 </svg>
                                             </button>
-                                            <button onclick="openDeleteModal(this)" class="p-1 hover:bg-gray-100 rounded-md">
+                                            <button onclick="openTaskDeleteModal(this)" class="p-1 hover:bg-gray-100 rounded-md">
                                                 <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M9 6v12m6-12v12M4 6l1-1h14l1 1M5 6v12a2 2 0 002 2h10a2 2 0 002-2V6"/>
                                                 </svg>                                                
@@ -185,78 +196,55 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="p-3">GreenEnergy Solutions</td>
-                                        <td class="p-3">Renewable Energy Transition</td>
-                                        <td class="p-3">Amsterdam, Netherlands</td>
-                                        <td class="p-3">2010</td>
-                                        <td class="p-3">1800</td>
+                                        <td class="p-3">Pipeline Integrity Inspection</td>
+                                        <td class="p-3">Maintenance</td>
+                                        <td class="p-3">Completed</td>
+                                        <td class="p-3">01/15/2022</td>
                                         <td class="p-3">
-                                            
-                                            <button onclick="openEmployerEditModal(this)" class="p-1 hover:bg-gray-100 rounded-md">
-                                                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
-                                                </svg>
-                                            </button>
-                                            <button onclick="openDeleteModal(this)" class="p-1 hover:bg-gray-100 rounded-md">
+                                          <div class="bg-gray-200 h-2 rounded">
+                                            <div class="bg-blue-500 h-2 rounded" style="width: 100%"></div>
+                                          </div>
+                                        </td>
+                                        <td class="p-3">
+                                          <button onclick="handleViewClick('tasks', 'task-list-template')" class="p-1 hover:bg-gray-100 rounded-md" data-task-name="Pipeline Integrity Inspection" data-requirements="1" data-status="completed">
+                                            <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5C7.305 4.5 3.135 7.305 1.5 12c1.635 4.695 5.805 7.5 10.5 7.5s8.865-2.805 10.5-7.5C20.865 7.305 16.695 4.5 12 4.5zm0 12c-2.485 0-4.5-2.015-4.5-4.5s2.015-4.5 4.5-4.5 4.5 2.015 4.5 4.5-2.015 4.5-4.5 4.5zm0-7.5c-1.655 0-3 1.345-3 3s1.345 3 3 3 3-1.345 3-3-1.345-3-3-3z" />
+                                            </svg>
+                                          </button>
+                                          <button onclick="openTaskEditModal(this)" class="p-1 hover:bg-gray-100 rounded-md" data-task="Pipeline Integrity Inspection" data-category="Maintenance" data-status="Completed" data-due="01/15/2022" data-progress="100">
+                                            <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                            </svg>
+                                          </button>
+                                          <button onclick="openTaskDeleteModal(this)" class="p-1 hover:bg-gray-100 rounded-md">
+                                            <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M9 6v12m6-12v12M4 6l1-1h14l1 1M5 6v12a2 2 0 002 2h10a2 2 0 002-2V6" />
+                                            </svg>
+                                          </button>
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <td class="p-3">Offshore Safety Drill</td>
+                                        <td class="p-3">Safety</td>
+                                        <td class="p-3">Pending</td>
+                                        <td class="p-3">03/10/2022</td>
+                                        <td class="p-3">
+                                          <div class="bg-gray-200 h-2 rounded">
+                                            <div class="bg-blue-500 h-2 rounded" style="width: 10%"></div>
+                                          </div>
+                                        </td>
+                                        <td class="p-3">
+                                            <button onclick="handleViewClick('tasks', 'task-list-template')" class="p-1 hover:bg-gray-100 rounded-md" data-task-name="ABC Company Business Systems" data-requirements="1" data-status="active">
                                                 <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M9 6v12m6-12v12M4 6l1-1h14l1 1M5 6v12a2 2 0 002 2h10a2 2 0 002-2V6"/>
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5C7.305 4.5 3.135 7.305 1.5 12c1.635 4.695 5.805 7.5 10.5 7.5s8.865-2.805 10.5-7.5C20.865 7.305 16.695 4.5 12 4.5zm0 12c-2.485 0-4.5-2.015-4.5-4.5s2.015-4.5 4.5-4.5 4.5 2.015 4.5 4.5-2.015 4.5-4.5 4.5zm0-7.5c-1.655 0-3 1.345-3 3s1.345 3 3 3 3-1.345 3-3-1.345-3-3-3z"/>
                                                 </svg>                                                
                                             </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="p-3">Gulf Petroleum Corporation</td>
-                                        <td class="p-3">ntegrated Oil & Gas</td>
-                                        <td class="p-3">Abu Dhabi, UAE</td>
-                                        <td class="p-3">1971</td>
-                                        <td class="p-3">9500</td>
-                                        <td class="p-3">
-                                            
-                                            <button onclick="openEmployerEditModal(this)" class="p-1 hover:bg-gray-100 rounded-md">
+                                            <button onclick="openTaskEditModal(this)" class="p-1 hover:bg-gray-100 rounded-md" data-task="Aerial & Scissor Lift Certification" data-category="Training" data-status="In Progress" data-due="02/20/2022" data-progress="20">
                                                 <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
                                                 </svg>
                                             </button>
-                                            <button onclick="openDeleteModal(this)" class="p-1 hover:bg-gray-100 rounded-md">
-                                                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M9 6v12m6-12v12M4 6l1-1h14l1 1M5 6v12a2 2 0 002 2h10a2 2 0 002-2V6"/>
-                                                </svg>                                                
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="p-3">Arctic Energy Enterprises</td>
-                                        <td class="p-3">Frontier Exploration</td>
-                                        <td class="p-3">Oslo, Norway</td>
-                                        <td class="p-3">1992</td>
-                                        <td class="p-3">2300</td>
-                                        <td class="p-3">
-                                            
-                                            <button onclick="openEmployerEditModal(this)" class="p-1 hover:bg-gray-100 rounded-md">
-                                                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
-                                                </svg>
-                                            </button>
-                                            <button onclick="openDeleteModal(this)" class="p-1 hover:bg-gray-100 rounded-md">
-                                                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M9 6v12m6-12v12M4 6l1-1h14l1 1M5 6v12a2 2 0 002 2h10a2 2 0 002-2V6"/>
-                                                </svg>                                                
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="p-3">TransContinental Pipeline Co.</td>
-                                        <td class="p-3">Midstream Infrastructure</td>
-                                        <td class="p-3">Calgary, Canada</td>
-                                        <td class="p-3">1967</td>
-                                        <td class="p-3">4100</td>
-                                        <td class="p-3">
-                                            <button onclick="openEmployerEditModal(this)" class="p-1 hover:bg-gray-100 rounded-md">
-                                                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
-                                                </svg>
-                                            </button>
-                                            <button onclick="openDeleteModal(this)" class="p-1 hover:bg-gray-100 rounded-md">
+                                            <button onclick="openTaskDeleteModal(this)" class="p-1 hover:bg-gray-100 rounded-md">
                                                 <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M9 6v12m6-12v12M4 6l1-1h14l1 1M5 6v12a2 2 0 002 2h10a2 2 0 002-2V6"/>
                                                 </svg>                                                
@@ -264,33 +252,39 @@
                                         </td>
                                     </tr>
                             </table>
-                            <div id="newEmployerModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
+                            <div id="newTaskModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
                                 <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
                                     <div class="mt-3">
-                                        <h3 class="text-lg font-medium leading-6 text-gray-900 mb-4">Add New Employer</h3>
-                                        <form id="newEmployerForm">
+                                        <h3 class="text-lg font-medium leading-6 text-gray-900 mb-4">Add New Task</h3>
+                                        <form id="newTaskForm">
                                             <div class="mb-4">
-                                                <label class="block text-sm font-medium text-gray-700">Name</label>
-                                                <input id="name" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" required>
+                                                <label class="block text-sm font-medium text-gray-700">Task Name</label>
+                                                <input id="task" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" required>
                                             </div>
                                             <div class="mb-4">
-                                                <label class="block text-sm font-medium text-gray-700">Sub-Industry</label>
-                                                <input id="subindustry" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
+                                                <label class="block text-sm font-medium text-gray-700">Category</label>
+                                                <select id="category" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
+                                                    <option value="Training">Training</option>
+                                                    <option value="Certificate">Certificate</option>
+                                                </select>
                                             </div>
                                             <div class="mb-4">
-                                                <label class="block text-sm font-medium text-gray-700">Headquarters</label>
-                                                <input id="headquarters" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
+                                                <label class="block text-sm font-medium text-gray-700">Status</label>
+                                                <select id="status" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
+                                                    <option value="Ongoing">Ongoing</option>
+                                                    <option value="Completed">Completed</option>
+                                                </select>
                                             </div>
                                             <div class="mb-4">
-                                                <label class="block text-sm font-medium text-gray-700">Founded Years</label>
-                                                <input id="foundedYear" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" required>
+                                                <label class="block text-sm font-medium text-gray-700">Due Date</label>
+                                                <input id="due" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" required>
                                             </div>
                                             <div class="mb-4">
-                                                <label class="block text-sm font-medium text-gray-700">employer Count</label>
-                                                <input id="employerCount" type="number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" required>
+                                                <label class="block text-sm font-medium text-gray-700">Progress</label>
+                                                <input id="progress" type="number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" required>
                                             </div>
                                             <div class="flex justify-end gap-2">
-                                                <button type="button" onclick="closeModal('newEmployerModal')" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300">Cancel</button>
+                                                <button type="button" onclick="closeModal('newTaskModal')" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300">Cancel</button>
                                                 <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">Save</button>
                                             </div>
                                         </form>
@@ -376,11 +370,6 @@
             });
         });
 
-        subIndustryFilter.addEventListener('change', filteremployers);
-        headQuartersFilter.addEventListener('change', filteremployers);
-        searchInput.addEventListener('input', filteremployers);
-
-        filteremployers();
 
         function displayFilteredemployers(filteredemployers) {
             const employerList = document.getElementById('employerList');
@@ -409,27 +398,7 @@
             });
         }
 
-        function filteremployers() {
-            const selectedSubIndustry = subIndustryFilter.value;
-            const selectedHeadquarters = headQuartersFilter.value;
-            const searchTerm = searchInput.value.toLowerCase().trim();
-
-            const filteredemployers = employers.filter(employer => {
-                const subIndustryMatch = selectedSubIndustry === "SubIndustry: None" || 
-                                        employer.subIndustry === selectedSubIndustry;
-                const headquartersMatch = selectedHeadquarters === "Headquarters: None" || 
-                                        employer.headquarters === selectedHeadquarters;
-
-                const searchMatch = searchTerm === "" || 
-                    Object.values(employer).some(value => 
-                        String(value).toLowerCase().includes(searchTerm)
-                );
-
-
-                return subIndustryMatch && headquartersMatch && searchMatch;
-            });
-            displayFilteredemployers(filteredemployers);
-        }
+        
 
 
         // Modal functions
@@ -490,31 +459,31 @@
         if(newEmployerButton) {
             newEmployerButton.addEventListener('click', function(e) {
                 e.preventDefault();
-                openModal('newEmployerModal');
+                openModal('newTaskModal');
             });
         }
-        const newEmployerForm = document.getElementById('newEmployerForm');
-        if (newEmployerForm) {
-            newEmployerForm.addEventListener('submit', function(e) {
+        const newTaskForm = document.getElementById('newTaskForm');
+        if (newTaskForm) {
+            newTaskForm.addEventListener('submit', function(e) {
                 e.preventDefault();
-                const form = document.getElementById('newEmployerForm');
-                const nameInput = form.querySelector('input[id="name"]');
-                const subIndustryInput = form.querySelector('input[id="subindustry"]');
-                const headquartersInput = form.querySelector('input[id="headquarters"]');
-                const founderYearInput = form.querySelector('input[id="foundedYear"]');
-                const employerCountInput = form.querySelector('input[id="employerCount"]');
-                const name = nameInput.value.trim();
-                const subIndustry = subIndustryInput.value.trim();
-                const headquarters = headquartersInput.value.trim();
-                const founderYear = founderYearInput.value.trim();
-                const employerCount = employerCountInput.value.trim();
+                const form = document.getElementById('newTaskForm');
+                const nameInput = form.querySelector('input[id="task"]');
+                const subIndustryInput = form.querySelector('select[id="category"]');
+                const headquartersInput = form.querySelector('select[id="status"]');
+                const founderYearInput = form.querySelector('input[id="due"]');
+                const employerCountInput = form.querySelector('input[id="progress"]');
+                const task = nameInput.value.trim();
+                const category = subIndustryInput.value.trim();
+                const status = headquartersInput.value.trim();
+                const due = founderYearInput.value.trim();
+                const progress = employerCountInput.value.trim();
                 
                 if (!nameInput) {
                     alert('Please enter an employer name');
                     return;
                 }
-                addNewEmployerRow(name, subIndustry, headquarters, founderYear, employerCount);
-                closeModal('newEmployerModal');
+                addNewEmployerRow(task, category, status, due, progress);
+                closeModal('newTaskModal');
             });
         }
 
@@ -529,6 +498,11 @@
                 <td class="p-3">${founderYear}</td>
                 <td class="p-3">${employerCount}</td>
                 <td class="p-3">
+                    <button onclick="handleViewClick('tasks', 'task-list-template')" class="p-1 hover:bg-gray-100 rounded-md" data-task-name="ABC Company Business Systems" data-requirements="1" data-status="active">
+                        <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5C7.305 4.5 3.135 7.305 1.5 12c1.635 4.695 5.805 7.5 10.5 7.5s8.865-2.805 10.5-7.5C20.865 7.305 16.695 4.5 12 4.5zm0 12c-2.485 0-4.5-2.015-4.5-4.5s2.015-4.5 4.5-4.5 4.5 2.015 4.5 4.5-2.015 4.5-4.5 4.5zm0-7.5c-1.655 0-3 1.345-3 3s1.345 3 3 3 3-1.345 3-3-1.345-3-3-3z"/>
+                        </svg>                                                
+                    </button>
                     <button onclick="openEmployerEditModal(this)" class="p-1 hover:bg-gray-100 rounded-md">
                         <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
@@ -542,6 +516,11 @@
                 </td>
             `;
             employerList.appendChild(newRow);
+        }
+
+        function handleViewClick()
+        {
+            window.location.href = '/subtask';
         }
 
 

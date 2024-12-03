@@ -35,6 +35,18 @@ app.get('/competency', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'competency.html'));
 });
 
+app.get('/program', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'program.html'));
+});
+
+app.get('/task', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'task.html'));
+});
+
+app.get('/subtask', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'subtask.html'));
+});
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
